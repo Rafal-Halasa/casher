@@ -15,5 +15,7 @@
     <fragment
         android:id="@+id/cashDetailView"
         android:name="com.simcodic.casher.ui.cash_detail.CashDetailView"
-        android:label="CashDetailView" />
+        android:label="CashDetailView" >
+
+    </fragment>
 </navigation>

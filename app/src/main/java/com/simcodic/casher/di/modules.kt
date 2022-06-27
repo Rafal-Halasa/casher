@@ -1,17 +1,18 @@
 package com.simcodic.casher.di
 
+import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.simcodic.casher.data.services.CashServiceI
 import com.simcodic.casher.databinding.ViewCashListBinding
 import com.simcodic.casher.databinding.ViewCashListItemBinding
 import com.simcodic.casher.databinding.ViewCashListItemCashPairsBinding
+import com.simcodic.casher.databinding.ViewDetailstBinding
 import com.simcodic.casher.logic.interecptors.CashInterceptor
 import com.simcodic.casher.logic.interecptors.CashInterceptorI
 import com.simcodic.casher.ui.cash_detail.CashDetailViewModel
 import com.simcodic.casher.ui.cash_list.CashListViewModel
 import com.simcodic.casher.ui.cash_list.views.ListViewAdapter
+import com.simcodic.casher.ui.cash_list.views.ViewDataHolder.CashPair.Companion.CASH_NAME
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.dsl.module
@@ -29,6 +30,8 @@ val viewBindings = module {
         val inflate = ViewCashListBinding.inflate(get())
         inflate.viewModel = get<CashListViewModel>()
         inflate.getNewCash = get<CashListViewModel>()
+        inflate.onClick = get<CashListViewModel>()
+
         inflate.lifecycleOwner = get()
         return@single inflate
     }
@@ -37,6 +40,11 @@ val viewBindings = module {
     }
     factory {
         ViewCashListItemCashPairsBinding.inflate(LayoutInflater.from(get()), null, false)
+    }
+    single {
+        val inflate = ViewDetailstBinding.inflate(get())
+        inflate.lifecycleOwner = get()
+        return@single inflate
     }
 }
 

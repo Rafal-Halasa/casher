@@ -4,17 +4,26 @@
 
     <data>
 
+        <variable
+            name="onClick"
+            type="com.simcodic.casher.ui.cash_list.OnClick" />
+
+        <variable
+            name="cashPair"
+            type="com.simcodic.casher.ui.cash_list.views.ViewDataHolder.CashPair" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> onClick.showViewCashDetail(cashPair) }">
 
         <TextView
             android:id="@+id/cash_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{cashPair.cashName}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +38,7 @@
             android:id="@+id/cash_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{Double.toString(cashPair.price)}"
             app:layout_constraintLeft_toRightOf="@id/separate"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

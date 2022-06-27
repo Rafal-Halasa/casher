@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simcodic.casher.data.models.Cash
 import com.simcodic.casher.logic.interecptors.CashInterceptorI
+import com.simcodic.casher.logic.navigation.MenuStates
+import com.simcodic.casher.logic.navigation.NavigationState
+import com.simcodic.casher.ui.cash_list.views.ViewDataHolder
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -24,8 +27,8 @@ class CashListViewModel : ViewModel(), CashListViewModelI, OnClick, OnGetNewCash
 
     override var cashList: LiveData<MutableList<Cash?>> = cashListLocal
 
-    override fun showViewCashDetail(day: String, exchangeRates: Pair<String, Double?>) {
-        TODO("Not yet implemented")
+    override fun showViewCashDetail(exchangeRates: ViewDataHolder.CashPair) {
+        NavigationState.state.value = MenuStates.CASH_DETAIL.apply { bundle = exchangeRates.getBundle() }
     }
 
     override fun getNewCash() {
@@ -46,7 +49,7 @@ interface CashListViewModelI {
 }
 
 interface OnClick {
-    fun showViewCashDetail(day: String, exchangeRates: Pair<String, Double?>)
+    fun showViewCashDetail(exchangeRates: ViewDataHolder.CashPair)
 }
 
 interface OnGetNewCash {

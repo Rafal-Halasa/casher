@@ -1,5 +1,6 @@
 package com.simcodic.casher.ui.cash_list.views
 
+import android.os.Bundle
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.simcodic.casher.data.models.Cash
@@ -38,7 +39,7 @@ class ListViewAdapter(
     class DateViewHolder(
         private val viewBinding: ViewCashListItemBinding,
     ) : RecyclerView.ViewHolder(viewBinding.root) {
-        fun bind(value: CashDate, onClickListener: OnClick?) {
+        fun bind(value: CashDate) {
             viewBinding.value.text = value.date
         }
     }
@@ -46,9 +47,9 @@ class ListViewAdapter(
     class CashPairViewHolder(
         private val viewBinding: ViewCashListItemCashPairsBinding,
     ) : RecyclerView.ViewHolder(viewBinding.root) {
-        fun bind(value: CashPair, onClickListener: OnClick?) {
-            viewBinding.cashName.text = value.cashName
-            viewBinding.cashPrice.text = value.price.toString()
+        fun bind(cashPair: CashPair, onClickListener: OnClick?) {
+            viewBinding.cashPair = cashPair
+            viewBinding.onClick = onClickListener
         }
     }
 
@@ -66,7 +67,7 @@ class ListViewAdapter(
         }
         cashDataList[position].apply {
             when (this) {
-                is CashDate -> if (holder is DateViewHolder) holder.bind(this, onClickListener)
+                is CashDate -> if (holder is DateViewHolder) holder.bind(this)
                 is CashPair -> if (holder is CashPairViewHolder) holder.bind(this, onClickListener)
             }
         }
@@ -83,5 +84,15 @@ class ListViewAdapter(
 
 sealed class ViewDataHolder {
     class CashDate(var date: String) : ViewDataHolder()
-    class CashPair(var cashName: String, var price: Double) : ViewDataHolder()
+    class CashPair(var cashName: String, var price: Double) : ViewDataHolder() {
+        companion object {
+            const val CASH_NAME = "cashName"
+            const val CASH_PRICE = "price"
+        }
+
+        fun getBundle(): Bundle = Bundle().apply {
+            putString(CASH_NAME, cashName)
+            putDouble(CASH_PRICE, price)
+        }
+    }
 }
